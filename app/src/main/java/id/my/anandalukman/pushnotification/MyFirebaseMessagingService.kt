@@ -7,10 +7,13 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import org.json.JSONArray
+import org.json.JSONObject
 
 /**
  * --- STEP BUILDING NOTIFICATION ---
@@ -28,6 +31,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         if (remoteMessage.getNotification() != null) {
             generateNotification(remoteMessage.notification?.title!!, remoteMessage.notification?.body!!)
+            Log.d("remoteMessage", " ${remoteMessage.data}")
+            val jsonObject = JSONObject(remoteMessage.data.toString())
+            val date= jsonObject.get("Nick")
+            Log.d("remoteNick ", " $date")
         }
     }
 
